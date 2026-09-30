@@ -4,14 +4,16 @@ namespace App\Http\Repositories;
 
 use App\Models\User;
 
-class UserRepository
+class UserRepository extends BaseRepository
 {
     public function __construct(private User $model)
-    {}
-
-    public function index(array $data)
     {
-        return $this->model->query()->where(function ($query) use($data) {
+        parent::__construct($model);
+    }
+
+    public function getWithFilters(array $data)
+    {
+        $builder = $this->model->query()->where(function ($query) use($data) {
             if (data_get($data, 'name')) {
                 $query->where('name', 'like', '%' . $data['name'] . '%');
             }
@@ -19,36 +21,8 @@ class UserRepository
             if (data_get($data, 'email')) {
                 $query->where('email', 'like', '%' . $data['email'] . '%');
             }
-        })->get();
-    }
+        });
 
-    public function store(array $data)
-    {
-        return $this->model->create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => $data['password']
-        ]);
-    }
-
-    public function show(string $id)
-    {
-        return $this->model->findOrFail($id);
-    }
-
-    public function update(array $data, string $id)
-    {
-        $user = $this->show($id);
-
-        $user->update($data);
-
-        return $user->fresh();
-    }
-
-    public function destroy(string $id)
-    {
-        $user = $this->show($id);
-
-        $user->delete();
+        return $this->index($builder);
     }
 }

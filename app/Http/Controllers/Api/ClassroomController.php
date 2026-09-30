@@ -18,7 +18,7 @@ class ClassroomController extends Controller
      */
     public function index(Request $request)
     {
-        return ClassroomResource::collection($this->classroomService->index($request->all()));
+        return ClassroomResource::collection($this->classroomService->getWithFilters($request->all()));
     }
 
     /**
