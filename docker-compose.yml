@@ -3,7 +3,7 @@ services:
   app:
     build: .
     ports:
-      - "8000:8000"
+      - "8020:8000"
     volumes:
       - ./:/var/www/html    # código do host espelhado no container
     user: "1000:1000"       # mesmo usuário do host, evita arquivos criados como root
@@ -13,7 +13,7 @@ services:
   mysql:
     image: mysql:8.4
     ports:
-      - "3306:3306"
+      - "3308:3306"
     environment:
       MYSQL_DATABASE: paradigmas-prog
       MYSQL_USER: paradigmas
@@ -26,7 +26,7 @@ services:
   adminer:
     image: adminer
     ports:
-      - "8080:8080"
+      - "8040:8080"
     depends_on:
       - mysql
 
