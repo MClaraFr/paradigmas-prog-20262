@@ -15,7 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'user.type' => CheckUserType::class
         ]);
+
+        // API não possui página de login, então não redireciona usuários não autenticados
+        $middleware->redirectGuestsTo(fn () => null);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // Sempre responde erros em JSON (ex.: 401 Unauthenticated), mesmo sem o header Accept
+        $exceptions->shouldRenderJsonWhen(fn () => true);
     })->create();
