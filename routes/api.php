@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Api\CourseController;
 use App\Http\Controllers\Api\ClassroomController;
 use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\Api\UserController;
@@ -23,4 +26,5 @@ Route::middleware('auth:sanctum')->group(function () {
     // Equivale a isso
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/classrooms', ClassroomController::class);
+    Route::apiResource('/courses', CourseController::class);
 });
