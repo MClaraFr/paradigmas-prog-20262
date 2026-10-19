@@ -8,6 +8,12 @@ class Classroom extends Model
 {
     protected $fillable = [
         'name',
-        'vacancies'
+        'vacancies',
+        'course_id'
     ];
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
 }
