@@ -24,6 +24,7 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     // Equivale a isso
+    Route::post('/classrooms/{id}/users', [ClassroomController::class, 'manageUser']);
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/classrooms', ClassroomController::class);
     Route::apiResource('/courses', CourseController::class);

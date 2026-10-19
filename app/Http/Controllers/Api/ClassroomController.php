@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ClassroomRequest;
 use App\Http\Resources\ClassroomResource;
 use App\Http\Services\ClassroomService;
+use App\Http\Requests\ClassroomUserRequest;
 use Illuminate\Http\Request;
 
 class ClassroomController extends Controller
 {
     public function __construct(private ClassroomService $classroomService)
-    {}
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -53,5 +55,12 @@ class ClassroomController extends Controller
         $this->classroomService->destroy($id);
 
         return response()->noContent();
+    }
+    public function manageUser(ClassroomUserRequest $request, string $id)
+    {
+        
+        $classroom = $this->classroomService->manageUser($id, $request->validated()['user_id'], $request->validated()['action']);
+
+        return new ClassroomResource($classroom);
     }
 }
